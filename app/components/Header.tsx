@@ -36,9 +36,11 @@ export default function Header() {
           </nav>
           <div className="flex items-center space-x-4">
             <ThemeToggle />
-            <Button variant="outline" className="hidden sm:inline-flex">
-              Log in
-            </Button>
+            <Link href="/login" className="hidden sm:inline-flex">
+              <Button variant="outline">
+                Log in
+              </Button>
+            </Link>
             <Button>Sign up</Button>
           </div>
         </div>
