@@ -12,6 +12,7 @@
     "@apollo/server": "^4.11.3",
     "@as-integrations/next": "^3.2.0",
     "@auth/prisma-adapter": "^2.8.0",
+    "@auth0/nextjs-auth0": "^4.4.1",
     "@emotion/is-prop-valid": "latest",
     "@hookform/resolvers": "^3.9.1",
     "@prisma/client": "^6.5.0",

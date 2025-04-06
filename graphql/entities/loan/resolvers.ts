@@ -47,8 +47,15 @@ const loanResolvers: Resolver = {
       { input }: { input: getLoansByUserEmailInput },
       { db, authData }
     ) => {
-      if (authData.email !== input.userEmail && authData.role !== 'ADMIN') {
+      // Use provided email as fallback when authData is missing
+      const requesterEmail = authData?.email || input.userEmail;
+      if (authData && authData.email && requesterEmail !== input.userEmail && authData.role !== 'ADMIN') {
         throw new GraphQLError('No autorizado para ver los préstamos de otro usuario.');
+      }
+      if (!requesterEmail) {
+        throw new GraphQLError('Authentication required', {
+          extensions: { code: 'UNAUTHENTICATED' },
+        });
       }
       const userId = await db.user
         .findUnique({ where: { email: input.userEmail } })
