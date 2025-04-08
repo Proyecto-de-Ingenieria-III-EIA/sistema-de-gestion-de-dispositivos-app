@@ -1,7 +1,6 @@
 import { Resolver } from '@/types';
 import { GraphQLError } from 'graphql';
 import { Enum_RoleName, PrismaClient, Role, User } from '@prisma/client';
-import { get } from 'http';
 
 interface CreateTicketInput {
   technicianId: any;
