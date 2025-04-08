@@ -14,7 +14,7 @@ export default function LoginPage() {
 
   return (
     <div className="flex min-h-screen items-center justify-center">
-      <p>Redirecting to Auth0...</p>
+      <p>Loading...</p>
     </div>
   );
 }
