@@ -11,25 +11,39 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { signOut } from "next-auth/react"
+import { signOut, useSession } from "next-auth/react"
 
 export function UserNav() {
+  const { data: session } = useSession()
+  
+  // Extract user information with fallbacks
+  const userImage = session?.user?.image || "/placeholder.svg?height=32&width=32"
+  const userName = session?.user?.name || "User"
+  const userEmail = session?.user?.email || "user@example.com"
+  
+  // Get initials for avatar fallback
+  const initials = userName
+    .split(" ")
+    .map(name => name[0])
+    .join("")
+    .toUpperCase()
+    .substring(0, 2) || "U"
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="relative h-8 w-8 rounded-full">
           <Avatar className="h-8 w-8">
-            <AvatarImage src="/placeholder.svg?height=32&width=32" alt="@user" />
-            <AvatarFallback>U</AvatarFallback>
+            <AvatarImage src={userImage} alt={userName} />
+            <AvatarFallback>{initials}</AvatarFallback>
           </Avatar>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56" align="end" forceMount>
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
-            <p className="text-sm font-medium leading-none">User</p>
-            <p className="text-xs leading-none text-muted-foreground">user@example.com</p>
+            <p className="text-sm font-medium leading-none">{userName}</p>
+            <p className="text-xs leading-none text-muted-foreground">{userEmail}</p>
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
