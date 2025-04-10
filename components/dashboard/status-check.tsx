@@ -12,7 +12,7 @@ export async function StatusCheck() {
         </div>
       </div>
     )
-  } catch (error) {
+  } catch {
     return (
       <div className="flex items-center space-x-2">
         <div className="h-3 w-3 rounded-full bg-red-500"></div>

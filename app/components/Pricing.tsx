@@ -73,7 +73,7 @@ export default function Pricing() {
           viewport={{ once: true }}
         >
           <h2 className="text-3xl font-extrabold text-foreground sm:text-4xl">Simple, transparent pricing</h2>
-          <p className="mt-4 text-xl text-muted-foreground">Choose the plan that's right for your business</p>
+          <p className="mt-4 text-xl text-muted-foreground">Choose the plan that&apos;s right for your business</p>
         </motion.div>
         <div className="mt-16 grid gap-8 lg:grid-cols-3">
           {plans.map((plan, index) => (
@@ -95,7 +95,7 @@ export default function Pricing() {
                 <Button className="mt-6 w-full">{plan.name === "Enterprise" ? "Contact sales" : "Get started"}</Button>
               </div>
               <div className="px-6 pt-6 pb-8">
-                <h4 className="text-sm font-medium text-foreground tracking-wide uppercase">What's included</h4>
+                <h4 className="text-sm font-medium text-foreground tracking-wide uppercase">What&apos;s included</h4>
                 <ul className="mt-6 space-y-4">
                   {plan.features.map((feature) => (
                     <li key={feature} className="flex items-start">
@@ -106,6 +106,8 @@ export default function Pricing() {
                     </li>
                   ))}
                 </ul>
+                <p className="text-sm text-muted-foreground">Don&apos;t need all the features? Start with basic.</p>
+                <p className="text-sm text-muted-foreground">Need more power? We&apos;ve got you covered.</p>
               </div>
             </motion.div>
           ))}

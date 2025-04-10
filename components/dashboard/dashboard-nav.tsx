@@ -1,5 +1,7 @@
+"use client"
+
 import Link from "next/link"
-import { BarChart3, Users, Package, Settings, LayoutDashboard } from "lucide-react"
+import { BarChart3, LayoutDashboard } from "lucide-react"
 
 interface DashboardNavProps {
   currentPath: string;

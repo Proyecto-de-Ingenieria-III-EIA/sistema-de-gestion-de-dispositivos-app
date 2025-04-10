@@ -1,6 +1,7 @@
 "use client"
 
 import { motion } from "framer-motion"
+import Image from "next/image"
 
 const testimonials = [
   {
@@ -67,7 +68,7 @@ export default function Testimonials() {
         >
           <h2 className="text-3xl font-extrabold text-foreground sm:text-4xl">Trusted by businesses worldwide</h2>
           <p className="mt-4 text-xl text-muted-foreground">
-            Here's what our satisfied customers have to say about StreamLine
+            Here&apos;s what our satisfied customers have to say about StreamLine
           </p>
         </motion.div>
         <div className="mt-16 grid gap-8 lg:grid-cols-3">
@@ -83,8 +84,10 @@ export default function Testimonials() {
             >
               <div className="px-6 py-8">
                 <div className="flex items-center">
-                  <img
+                  <Image
                     className="h-12 w-12 rounded-full"
+                    width={48}
+                    height={48}
                     src={testimonial.image || "/placeholder.svg"}
                     alt={testimonial.name}
                   />
@@ -93,7 +96,7 @@ export default function Testimonials() {
                     <div className="text-sm text-muted-foreground">{testimonial.role}</div>
                   </div>
                 </div>
-                <p className="mt-4 text-muted-foreground italic">"{testimonial.quote}"</p>
+                <p className="mb-4 text-muted-foreground italic">&quot;{testimonial.quote}&quot;</p>
               </div>
             </motion.div>
           ))}
@@ -102,4 +105,5 @@ export default function Testimonials() {
     </div>
   )
 }
+
 
