@@ -1,8 +1,8 @@
 'use client';
 
 import React, { Suspense, useEffect } from "react";
-import { signIn, useSession, SessionProvider } from "next-auth/react";
 import { useSearchParams, useRouter } from "next/navigation";
+import { signIn, useSession, SessionProvider } from "next-auth/react";
 
 function LoginContent() {
   const { data: session, status } = useSession();
@@ -16,9 +16,7 @@ function LoginContent() {
     if (session) {
       router.push(callbackUrl);
     } else {
-      // Add a try-catch directly here and add better logging
       try {
-        console.log("Attempting to sign in with Auth0...");
         signIn("auth0", { callbackUrl, redirect: false });
       } catch (error) {
         console.error("Error during sign in attempt:", error);
