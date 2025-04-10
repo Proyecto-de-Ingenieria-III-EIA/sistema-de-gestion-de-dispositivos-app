@@ -10,26 +10,19 @@ function LoginContent() {
   const searchParams = useSearchParams();
   let callbackUrl = searchParams.get("callbackUrl") || "/dashboard";
   if (callbackUrl === "/") callbackUrl = "/dashboard";
-  console.log("callbackUrl", callbackUrl);
 
   useEffect(() => {
     if (status === "loading") return;
     if (session) {
       router.push(callbackUrl);
     } else {
-      signIn("auth0", { callbackUrl, redirect: false })
-        .then((result) => {
-          if (result?.ok) {
-            console.log("Callback URL:", callbackUrl);
-            router.push(callbackUrl);
-          } else {
-            // Imprime el error devuelto por signIn para depuración
-            console.error("SignIn did not succeed:", result?.error);
-          }
-        })
-        .catch((error) => {
-          console.error("Error signing in:", error);
-        });
+      // Add a try-catch directly here and add better logging
+      try {
+        console.log("Attempting to sign in with Auth0...");
+        signIn("auth0", { callbackUrl, redirect: false });
+      } catch (error) {
+        console.error("Error during sign in attempt:", error);
+      }
     }
   }, [session, status, router, callbackUrl]);
 

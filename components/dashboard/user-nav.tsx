@@ -14,6 +14,7 @@ import {
 import { signOut } from "next-auth/react"
 
 export function UserNav() {
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -38,7 +39,29 @@ export function UserNav() {
           <DropdownMenuItem>Settings</DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={() => signOut()}>Log out</DropdownMenuItem>
+        <DropdownMenuItem
+          onClick={async () => {
+            try {
+              await signOut({ redirect: false });
+
+              // Get Auth0 domain and ensure it has https:// prefix
+              let auth0Domain = process.env.NEXT_PUBLIC_AUTH0_ISSUER || "";
+              if (!auth0Domain.startsWith("https://") && !auth0Domain.startsWith("http://")) {
+                auth0Domain = `https://${auth0Domain}`;
+              }
+
+              const returnTo = encodeURIComponent(window.location.origin);
+              const logoutUrl = `${auth0Domain}/v2/logout?client_id=${process.env.NEXT_PUBLIC_AUTH0_CLIENT_ID}&returnTo=${returnTo}`;
+
+              window.location.href = logoutUrl;
+            } catch (error) {
+              console.error("Logout error:", error);
+            }
+          }}
+          className="cursor-pointer"
+        >
+          Log out
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   )
