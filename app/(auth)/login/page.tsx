@@ -8,7 +8,9 @@ function LoginContent() {
   const { data: session, status } = useSession();
   const router = useRouter();
   const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get("callbackUrl") || "/dashboard";
+  let callbackUrl = searchParams.get("callbackUrl") || "/dashboard";
+  if (callbackUrl === "/") callbackUrl = "/dashboard";
+  console.log("callbackUrl", callbackUrl);
 
   useEffect(() => {
     if (status === "loading") return;
@@ -18,8 +20,15 @@ function LoginContent() {
       signIn("auth0", { callbackUrl, redirect: false })
         .then((result) => {
           if (result?.ok) {
+            console.log("Callback URL:", callbackUrl);
             router.push(callbackUrl);
+          } else {
+            // Imprime el error devuelto por signIn para depuración
+            console.error("SignIn did not succeed:", result?.error);
           }
+        })
+        .catch((error) => {
+          console.error("Error signing in:", error);
         });
     }
   }, [session, status, router, callbackUrl]);

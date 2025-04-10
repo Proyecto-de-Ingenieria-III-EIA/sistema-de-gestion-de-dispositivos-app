@@ -29,7 +29,8 @@ export const authConfig = {
   secret: process.env.AUTH_SECRET,
   callbacks: {
     async redirect({ url, baseUrl }) {
-      return url.startsWith(baseUrl) ? url : baseUrl;
+      // Siempre redirige al dashboard después de iniciar sesión
+      return `${baseUrl}/dashboard`;
     }
   }
 } satisfies NextAuthOptions;
