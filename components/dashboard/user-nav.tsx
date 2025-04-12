@@ -58,7 +58,6 @@ export function UserNav() {
             try {
               await signOut({ redirect: false });
 
-              // Get Auth0 domain and ensure it has https:// prefix
               let auth0Domain = process.env.NEXT_PUBLIC_AUTH0_ISSUER || "";
               if (!auth0Domain.startsWith("https://") && !auth0Domain.startsWith("http://")) {
                 auth0Domain = `https://${auth0Domain}`;
