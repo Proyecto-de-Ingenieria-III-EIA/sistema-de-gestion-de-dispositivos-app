@@ -1,0 +1,43 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# Project Organization
+ 
+## File Naming
+- Use kebab-case for all file names (e.g., `this-is-the-file.ts`)
+- Follow consistent naming conventions across the entire project
+- Names should clearly indicate the file's purpose and content
+ 
+## Directory Structure
+- `/app`: Simple entry points only, minimal logic
+- `/components`: Reusable UI elements organized by atomic design
+- `/context`: Global state management using Jotai
+- `/hooks`: Custom hooks for shared functionality
+- `/lib`: Utility functions and helpers
+- `/types`: TypeScript type definitions
+- `/styles`: Global style definitions
+ 
+## Pages
+- Pages should be minimal, serving as entry points only
+- Complex logic should be abstracted to components and hooks
+- Use default exports for pages as required by Next.js
+- Pages should follow the Next.js routing pattern
+ 
+## Code Structure
+- Follow single responsibility principle
+- Group related functionality together
+- Keep files under 300 lines
+- Use proper directory structure
+- Follow feature-based organization
+ 
+## Performance Considerations
+- Components should be properly memoized
+- Avoid unnecessary re-renders
+- Use proper data fetching patterns
+- Implement proper loading states
+ 
+## Role-Based Access Control
+- RBAC components should be placed in a dedicated folder
+- Access control should be implemented consistently throughout the application

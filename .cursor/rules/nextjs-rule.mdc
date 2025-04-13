@@ -1,0 +1,38 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# Next.js Rules (App Router)
+
+## File Conventions
+- Page files: `page.tsx` within route folders
+- API routes: `route.ts` inside route directories
+- Layout files: `layout.tsx` (nestable per segment)
+- Metadata: Export `metadata` from pages/layouts
+- Loading states: `loading.tsx` per segment
+- Error handling: `error.tsx` per segment
+
+## SEO & Performance
+- Use `generateMetadata` for dynamic SEO
+- Implement `viewport` and `theme-color` in root layout
+- Optimize images using `next/image`
+- Use `next/font` for font optimization
+- Implement `generateStaticParams` for ISR
+- Use `export const dynamic = 'force-static'` for static rendering
+
+## API Routes (App Router)
+- Use `route.ts` with Web Request/Response API
+- Keep API routes focused and single-purpose
+- Implement proper error handling
+- Use TypeScript for request/response types
+- Follow RESTful conventions
+- Document API endpoints
+ 
+## Data Fetching
+- Use async components for Server Components
+- Prefer `getServerSideProps` for dynamic data
+- Use `getStaticProps` for static data
+- Use `generateStaticParams` for static routes
+- Implement ISR when appropriate
+- Handle loading and error states

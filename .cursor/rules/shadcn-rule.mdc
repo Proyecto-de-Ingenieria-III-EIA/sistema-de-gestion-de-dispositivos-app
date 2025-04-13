@@ -1,0 +1,41 @@
+---
+description: 
+globs: components/atomic-design/atoms/**/*.tsx,components/ui/**/*.tsx
+alwaysApply: false
+---
+# shadcn/ui Rules
+ 
+## Component Usage
+- Use shadcn/ui components as base components
+- Extend and customize components as needed
+- Follow shadcn/ui documentation for proper usage
+- Maintain consistent styling across components
+- Do not modify the code from Shadcn
+ 
+## Styling
+- Use Tailwind CSS for styling
+- Follow shadcn/ui theming system
+- Use CSS variables for theming
+- Maintain consistent spacing and sizing
+- Follow responsive design principles
+ 
+## Accessibility
+- Ensure all components are accessible
+- Use proper ARIA attributes
+- Maintain keyboard navigation
+- Test with screen readers
+- Follow WCAG guidelines
+ 
+## Component Structure
+- Keep components modular and reusable
+- Use proper TypeScript types for props
+- Implement proper accessibility features
+- Follow shadcn/ui component patterns
+- Document component usage and props
+ 
+## Customization
+- Extend base components when needed
+- Use proper theming system
+- Maintain consistent customization patterns
+- Document custom components
+- Follow shadcn/ui customization guidelines

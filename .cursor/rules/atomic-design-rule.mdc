@@ -1,0 +1,57 @@
+---
+description: 
+globs: components/**/*.tsx,components/**/*.ts
+alwaysApply: false
+---
+# Atomic Design
+ 
+## Overview
+The components directory follows atomic design principles, organizing reusable UI elements in a hierarchical structure from simple to complex components.
+ 
+## Component Organization
+ 
+### `/components/atomic-design`
+This folder contains all reusable interface elements that can be used throughout the application. A component is considered reusable if it is used in two or more pages.
+ 
+#### Atoms
+- The simplest, indivisible UI elements
+- Cannot be broken down further
+- Examples: buttons, inputs, labels
+- **Shadcn**: A collection of predefined components that we aim to reuse across all our projects
+ 
+#### Molecules
+- Components created from multiple atoms
+- Examples: card with a button
+- Should be focused on a single responsibility
+ 
+#### Organisms
+- Combinations of multiple molecules and/or atoms
+- More complex than molecules
+- Examples: forms, complex UI sections
+- This directory contains:
+  - **Autoform**: Components for generating forms
+  - **Generic table**: Reusable table components
+  
+#### Templates
+- Page structures that can be reused
+- Define the layout and organization of content
+- Can be adapted for different pages while maintaining consistent structure
+ 
+### `/app`
+- Contains page-specific components that aren't reusable
+- Each folder corresponds to an application flow
+- Folders and files should be named in English
+- Files in this directory are entry points and should be kept minimal
+ 
+### `/components/rbac`
+- Contains components for role-based access control
+- Manages access based on user roles in the frontend
+ 
+## Best Practices
+- Keep components as focused and simple as possible
+- Respect the component hierarchy (atoms → molecules → organisms → templates)
+- Follow the single responsibility principle
+- Document complex components
+- Maintain consistent naming and styling across all components
+- Components should be properly typed with TypeScript
+- Use kebab-case for all component file names

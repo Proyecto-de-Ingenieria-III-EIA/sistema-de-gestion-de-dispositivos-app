@@ -1,0 +1,68 @@
+---
+description: 
+globs: context/**/*.tsx,context/**/*.ts,hooks/**/*.tsx,hooks/**/*.ts
+alwaysApply: false
+---
+# State Management
+ 
+## Overview
+This project uses Jotai for global state management and custom hooks for shared functionality. We avoid using `useEffect` as much as possible.
+ 
+## Global State with Jotai
+ 
+### `/context`
+- Contains global state management using Jotai
+- Each context should be focused on a specific domain
+- Organize atoms by feature or domain
+- Use descriptive names for atoms
+- Prefer primitive atoms when possible
+- Use derived atoms for computed state
+ 
+### Jotai Best Practices
+- Keep atoms as simple as possible
+- Use atom families for dynamic state
+- Properly type all atoms
+- Document complex atoms
+- Use selectors to access specific parts of state
+- Avoid large atoms containing unrelated data
+ 
+## Custom Hooks
+ 
+### `/hooks`
+- Contains custom hooks for shared functionality
+- Each hook should focus on a single responsibility
+- Use hooks to abstract complex logic
+- Properly type hook parameters and return values
+- Document complex hooks
+ 
+### Hook Best Practices
+- Keep hooks focused and reusable
+- Follow the naming convention: `use[Name]`
+- Extract complex data fetching into dedicated hooks
+- Avoid side effects in hooks when possible
+- Return memoized values when appropriate
+ 
+## Guidelines
+ 
+### Avoiding `useEffect`
+- Avoid using `useEffect` hooks throughout the application
+- Instead, use Jotai for state changes that need side effects
+- Use SWR for data fetching
+- When `useEffect` is absolutely necessary:
+  - Clearly document why it's needed
+  - Keep dependencies to a minimum
+  - Consider extracting into a custom hook
+ 
+### State Location
+- Keep state as close as possible to where it's used
+- Use local component state for UI-only state
+- Use Jotai for shared state between components
+- Use URL state for navigation/routing state
+- Prefer server state when possible
+ 
+### Performance Considerations
+- Memoize expensive calculations
+- Use proper dependency arrays
+- Avoid unnecessary state updates
+- Split atoms for better performance
+- Test for rendering performance
