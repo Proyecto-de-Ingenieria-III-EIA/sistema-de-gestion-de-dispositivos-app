@@ -7,6 +7,7 @@ A comprehensive web application for managing devices, loans, and support tickets
 - [Overview](#overview)
 - [Features](#features)
 - [Technology Stack](#technology-stack)
+- [Atomic Design Methodology](#atomic-design-methodology)
 - [Project Structure](#project-structure)
 - [Getting Started](#getting-started)
   - [Prerequisites](#prerequisites)
@@ -43,6 +44,7 @@ This application is a device management and loan system that allows organization
 - **Framework**: [Next.js 15](https://nextjs.org/) with App Router
 - **Language**: [TypeScript](https://www.typescriptlang.org/)
 - **UI Components**: [Radix UI](https://www.radix-ui.com/) with [TailwindCSS](https://tailwindcss.com/)
+- **Component Architecture**: [Atomic Design](https://atomicdesign.bradfrost.com/) methodology
 - **State Management**: Context API and hooks
 - **Forms**: React Hook Form with Zod validation
 
@@ -52,25 +54,42 @@ This application is a device management and loan system that allows organization
 - **ORM**: [Prisma](https://www.prisma.io/)
 - **Authentication**: [NextAuth.js](https://next-auth.js.org/) / [Auth0](https://auth0.com/)
 
+## Atomic Design Methodology
+
+This project implements the Atomic Design methodology for component organization, which breaks down interfaces into five distinct levels:
+
+1. **Atoms**: Basic building blocks such as buttons, inputs, and labels that cannot be broken down further
+2. **Molecules**: Simple groups of UI elements functioning together as a unit (form fields, search bars)
+3. **Organisms**: Complex UI components composed of molecules and atoms that form distinct sections of an interface
+4. **Templates**: Page-level objects that place components into a layout and articulate the design's underlying content structure
+5. **Pages**: Specific instances of templates that represent the final UI with real content
+
+The main benefits of this approach include:
+- Consistent design system
+- Improved component reusability
+- Better separation of concerns
+- Scalable and maintainable UI architecture
+- Simplified testing and documentation
+
 ## Project Structure
 
 ```
 ├── app/                   # Next.js App Router pages and API routes
 │   ├── (auth)/            # Authentication-related routes
 │   ├── (private)/         # Protected routes requiring authentication
-│   │   ├── dashboard/     # Dashboard views
-│   │   ├── loans/         # Loan management views
 │   ├── (public)/          # Public routes
 │   ├── api/               # API routes
 │   ├── components/        # App-specific components
 │   ├── globals.css        # Global styles
 │   └── layout.tsx         # Root layout
-├── components/            # Shared UI components
-│   ├── dashboard/         # Dashboard-specific components
-│   ├── ui/                # Base UI components
-│   ├── providers.tsx      # Global providers
-│   ├── theme-provider.tsx # Theme provider
-│   └── theme-toggle.tsx   # Theme toggle component
+├── components/            # Shared UI components following Atomic Design
+│   ├── atomic-design/     # Components organized using Atomic Design principles
+│   │   ├── atoms/         # Basic building blocks (buttons, inputs, labels)
+│   │   ├── molecules/     # Groups of atoms (form fields, card components)
+│   │   └── organisms/     # Complex UI components (headers, forms, toasts)
+│   ├── templates/         # Page layout templates
+│   ├── providers/         # Context providers
+│   └── providers.tsx      # Global providers wrapper
 ├── graphql/               # GraphQL API
 │   ├── entities/          # GraphQL entity definitions
 │   └── index.ts           # GraphQL server setup
