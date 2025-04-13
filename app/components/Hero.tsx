@@ -1,6 +1,6 @@
 "use client"
 
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/atomic-design/atoms"
 import { motion } from "framer-motion"
 
 export default function Hero() {

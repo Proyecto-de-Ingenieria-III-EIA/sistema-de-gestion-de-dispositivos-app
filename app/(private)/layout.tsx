@@ -4,7 +4,6 @@ import { Inter } from "next/font/google"
 import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
 import { authConfig } from "@/auth";
-import { ThemeProvider } from "@/components/theme-provider";
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -25,10 +24,8 @@ export default async function PrivateLayout({
   }
 
   return (
-    <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-      <div className={`flex min-h-screen bg-gray-100 dark:bg-gray-900 ${inter.className}`}>
-        {children}
-      </div>
-    </ThemeProvider>
+    <div className={`flex min-h-screen bg-gray-100 dark:bg-gray-900 ${inter.className}`}>
+      {children}
+    </div>
   );
 }

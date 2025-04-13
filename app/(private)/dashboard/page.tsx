@@ -1,6 +1,7 @@
-import Dashboard from "@/components/dashboard/dashboard"
-import { ErrorBoundary } from "@/components/dashboard/error-boundary"
-import { DashboardSkeleton } from "@/components/dashboard/skeletons"
+
+import { DashboardSkeleton } from "@/components/atomic-design/molecules"
+import { ErrorBoundary } from "@/components/atomic-design/organisms"
+import { Dashboard } from "@/components/templates"
 import { Suspense } from "react"
 
 export default function DashboardPage() {

@@ -1,16 +1,24 @@
 "use client"
 
 import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { ThemeToggle } from "@/components/theme-toggle"
+import { Button, Skeleton } from "@/components/atomic-design/atoms"
 import { useSession } from "next-auth/react"
-import { UserNav } from "@/components/dashboard/user-nav"
-import { Skeleton } from "@/components/ui/skeleton"
+import { UserNav } from "@/components/atomic-design/organisms"
+import { useEffect, useState } from "react"
+import { ThemeToggle } from "@/components/atomic-design/molecules/theme-toggle"
 
 export default function Header() {
   const { status } = useSession()
   const isAuthenticated = status === "authenticated"
   const isLoading = status === "loading"
+  
+  // Add mounted state to avoid hydration mismatches
+  const [mounted, setMounted] = useState(false)
+  
+  // Only show auth-dependent UI after component has mounted on client
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   return (
     <header className="bg-background border-b border-border">
@@ -44,12 +52,20 @@ export default function Header() {
           <div className="flex items-center space-x-4">
             <ThemeToggle />
             
-            {isLoading ? (
+            {!mounted ? (
+              // Show static skeleton during SSR and hydration
+              <div className="flex items-center space-x-4">
+                <Skeleton className="h-9 w-24" />
+                <Skeleton className="h-8 w-8 rounded-full" />
+              </div>
+            ) : isLoading ? (
+              // Show loading state when auth is being determined
               <div className="flex items-center space-x-4">
                 <Skeleton className="h-9 w-24" />
                 <Skeleton className="h-8 w-8 rounded-full" />
               </div>
             ) : isAuthenticated ? (
+              // Show authenticated UI
               <>
                 <Link href="/dashboard">
                   <Button variant="outline">Dashboard</Button>
@@ -57,6 +73,7 @@ export default function Header() {
                 <UserNav />
               </>
             ) : (
+              // Show unauthenticated UI
               <>
                 <Link href="/login" className="hidden sm:inline-flex">
                   <Button variant="outline">

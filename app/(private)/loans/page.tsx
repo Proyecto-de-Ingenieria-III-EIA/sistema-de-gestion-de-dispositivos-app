@@ -1,6 +1,6 @@
-import { ErrorBoundary } from "@/components/dashboard/error-boundary"
-import Loans from "@/components/dashboard/loans"
-import { DashboardSkeleton } from "@/components/dashboard/skeletons"
+import { ErrorBoundary } from "@/components/atomic-design/organisms"
+import { DashboardSkeleton } from "@/components/atomic-design/molecules"
+import { Loans } from "@/components/atomic-design/organisms"
 import { Suspense } from "react"
 
 export default function LoansPage() {
