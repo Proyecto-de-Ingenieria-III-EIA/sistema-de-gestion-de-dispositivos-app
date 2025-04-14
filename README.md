@@ -121,16 +121,19 @@ The main benefits of this approach include:
 2. Update the environment variables in `.env` with your values:
 
 ```
-# Database
-DATABASE_URL="postgresql://user:password@localhost:5432/mydb"
-
-# Auth
+# Authentication
 AUTH_SECRET=your-secret-key
-AUTH0_SECRET=your-auth0-secret
-AUTH0_BASE_URL=your-auth0-base-url
-AUTH0_ISSUER_BASE_URL=your-auth0-issuer-base-url
-AUTH0_CLIENT_ID=your-auth0-client-id
-AUTH0_CLIENT_SECRET=your-auth0-client-secret
+AUTH_AUTH0_ID=your-auth0-client-id
+AUTH_AUTH0_SECRET=your-auth0-client-secret
+AUTH_AUTH0_ISSUER=your-auth0-issuer-base-url
+NEXTAUTH_URL=your-nextauth-url
+
+# Public Auth0 Configuration
+NEXT_PUBLIC_AUTH0_ISSUER=your-auth0-issuer-base-url
+NEXT_PUBLIC_AUTH0_CLIENT_ID=your-auth0-client-id
+
+# Database
+DATABASE_URL=postgresql://user:password@localhost:5432/mydb
 ```
 
 ### Installation
