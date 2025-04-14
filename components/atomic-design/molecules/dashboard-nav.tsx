@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { BarChart3, LayoutDashboard, TestTube } from "lucide-react"
+import { BarChart3, LayoutDashboard } from "lucide-react"
 import { useMobileNavContext } from "@/hooks/use-mobile-nav"
 
 interface DashboardNavProps {
