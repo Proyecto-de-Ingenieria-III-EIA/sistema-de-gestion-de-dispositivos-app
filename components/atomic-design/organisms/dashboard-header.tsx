@@ -3,7 +3,7 @@
 import { Menu, X } from "lucide-react"
 import { ThemeToggle } from "../molecules/theme-toggle";
 import { UserNav } from ".";
-import { useMobileNavContext } from "@/components/hooks/use-mobile-nav"
+import { useMobileNavContext } from "@/hooks/use-mobile-nav"
 
 export function DashboardHeader() {
   const { isOpen, toggle } = useMobileNavContext();
@@ -25,7 +25,7 @@ export function DashboardHeader() {
               <Menu className="h-5 w-5" />
             )}
           </button>
-          <span className="hidden sm:inline-block">Dashboard</span>
+          <span className="hidden sm:inline-block">W3MyPC Device Manager</span>
         </div>
         <div className="flex items-center gap-2">
           <ThemeToggle />

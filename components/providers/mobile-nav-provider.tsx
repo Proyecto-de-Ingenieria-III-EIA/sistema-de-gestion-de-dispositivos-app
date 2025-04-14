@@ -1,7 +1,7 @@
 "use client"
 
 import { ReactNode } from "react";
-import { NavContext, useNav } from "../hooks/use-mobile-nav";
+import { NavContext, useNav } from "../../hooks/use-mobile-nav";
 
 interface NavProviderProps {
   children: ReactNode;
