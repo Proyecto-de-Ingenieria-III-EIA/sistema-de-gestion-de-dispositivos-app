@@ -3,14 +3,14 @@ export const metadata = {
   description: 'Login to your account',
 }
 
-export default function RootLayout({
+export default function AuthLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body>{children}</body>
-    </html>
+    <div className="min-h-screen flex items-center justify-center">
+      {children}
+    </div>
   )
 }
