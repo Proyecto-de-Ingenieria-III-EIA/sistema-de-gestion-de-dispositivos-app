@@ -5,4 +5,5 @@
 
 // These exports will be uncommented as components are migrated
 export * from './theme-provider';
+export * from './mobile-nav-provider';
 // export * from './providers'; 
