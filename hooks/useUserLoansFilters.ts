@@ -2,10 +2,28 @@
 
 import { useState, useEffect } from "react"
 import { parseISO } from "date-fns"
-import { LoanData, UseLoansFiltersReturn, Loan } from "@/types/loans"
-import { adaptLoanDataToLoan } from "@/lib/data-adapters"
+import { Loan, City } from "@/types/loans"
+import { useUserLoans } from "./useUserLoans"
 
-export function useLoansFilters(loansData: LoanData[]): UseLoansFiltersReturn {
+export interface UseUserLoansFiltersReturn {
+  loans: Loan[]
+  filteredLoans: Loan[]
+  cities: City[]
+  loanIdFilter: string
+  setLoanIdFilter: (value: string) => void
+  cityFilter: string
+  setCityFilter: (value: string) => void
+  startDateFilter: Date | undefined
+  setStartDateFilter: (date: Date | undefined) => void
+  endDateFilter: Date | undefined
+  setEndDateFilter: (date: Date | undefined) => void
+  resetFilters: () => void
+  isLoading: boolean
+  error: Error | null
+}
+
+export function useUserLoansFilters(): UseUserLoansFiltersReturn {
+  const { loans, isLoading, error } = useUserLoans()
   const [mounted, setMounted] = useState(false)
   const [loanIdFilter, setLoanIdFilter] = useState("")
   const [cityFilter, setCityFilter] = useState("All Cities")
@@ -35,14 +53,14 @@ export function useLoansFilters(loansData: LoanData[]): UseLoansFiltersReturn {
   }
 
   // Filter the loans based on the filter values
-  const filteredLoansData = loansData.filter((loan) => {
+  const filteredLoans = loans.filter((loan) => {
     // Filter by Loan ID
     if (loanIdFilter && !loan.id.toLowerCase().includes(loanIdFilter.toLowerCase())) {
       return false
     }
 
     // Filter by City
-    if (cityFilter !== "All Cities" && loan.city !== cityFilter) {
+    if (cityFilter !== "All Cities" && loan.originCity.name !== cityFilter) {
       return false
     }
 
@@ -65,10 +83,24 @@ export function useLoansFilters(loansData: LoanData[]): UseLoansFiltersReturn {
     return true
   })
 
-  // Convert filtered LoanData to Loan format
-  const filteredLoans = adaptLoanDataToLoan(filteredLoansData)
+  // Extract unique cities from loans
+  const extractedCities: City[] = []
+  
+  if (loans.length > 0) {
+    const cityNames = new Set<string>()
+    
+    loans.forEach(loan => {
+      if (!cityNames.has(loan.originCity.name)) {
+        cityNames.add(loan.originCity.name)
+        extractedCities.push({ name: loan.originCity.name })
+      }
+    })
+  }
 
   return {
+    loans,
+    filteredLoans,
+    cities: extractedCities,
     loanIdFilter,
     setLoanIdFilter,
     cityFilter,
@@ -78,6 +110,7 @@ export function useLoansFilters(loansData: LoanData[]): UseLoansFiltersReturn {
     endDateFilter,
     setEndDateFilter,
     resetFilters,
-    filteredLoans,
+    isLoading,
+    error
   }
 } 

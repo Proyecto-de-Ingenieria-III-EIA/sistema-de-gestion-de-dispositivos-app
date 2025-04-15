@@ -4,13 +4,15 @@ import { DashboardHeader } from "."
 import { DashboardNav, Tabs, TabsContent, TabsList, TabsTrigger } from "../molecules"
 import { ActiveLoansCard } from "./active-loans-card"
 import { LoanRequestForm } from "./loan-request-form"
-import { useLoansFilters } from "@/hooks/useLoansFilters"
 import { formatDate } from "@/lib/date-utils"
-import { loansData, cities } from "@/lib/sample-data"
+import { useUserLoansFilters } from "@/hooks/useUserLoansFilters"
+import { Spinner } from "../atoms/spinner"
 
 export function Loans() {
-  // Use the custom hook for filter state and filtered data
   const {
+    loans,
+    filteredLoans,
+    cities,
     loanIdFilter,
     setLoanIdFilter,
     cityFilter,
@@ -20,8 +22,9 @@ export function Loans() {
     endDateFilter,
     setEndDateFilter,
     resetFilters,
-    filteredLoans,
-  } = useLoansFilters(loansData)
+    isLoading,
+    error
+  } = useUserLoansFilters()
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -39,21 +42,32 @@ export function Loans() {
               <TabsTrigger value="requestLoan">Request Loan</TabsTrigger>
             </TabsList>
             <TabsContent value="activeLoans">
-              <ActiveLoansCard
-                loans={loansData}
-                filteredLoans={filteredLoans}
-                loanIdFilter={loanIdFilter}
-                setLoanIdFilter={setLoanIdFilter}
-                cityFilter={cityFilter}
-                setCityFilter={setCityFilter}
-                startDateFilter={startDateFilter}
-                setStartDateFilter={setStartDateFilter}
-                endDateFilter={endDateFilter}
-                setEndDateFilter={setEndDateFilter}
-                cities={cities}
-                resetFilters={resetFilters}
-                formatDate={(dateString) => formatDate(dateString)}
-              />
+              {isLoading ? (
+                <div className="flex justify-center items-center p-12">
+                  <Spinner size="lg" />
+                </div>
+              ) : error ? (
+                <div className="p-6 text-center">
+                  <p className="text-destructive font-medium">Error loading loans</p>
+                  <p className="text-muted-foreground text-sm mt-2">{error.message}</p>
+                </div>
+              ) : (
+                <ActiveLoansCard
+                  loans={loans}
+                  filteredLoans={filteredLoans}
+                  loanIdFilter={loanIdFilter}
+                  setLoanIdFilter={setLoanIdFilter}
+                  cityFilter={cityFilter}
+                  setCityFilter={setCityFilter}
+                  startDateFilter={startDateFilter}
+                  setStartDateFilter={setStartDateFilter}
+                  endDateFilter={endDateFilter}
+                  setEndDateFilter={setEndDateFilter}
+                  cities={cities}
+                  resetFilters={resetFilters}
+                  formatDate={(dateString) => formatDate(dateString)}
+                />
+              )}
             </TabsContent>
             <TabsContent value="requestLoan">
               <LoanRequestForm />

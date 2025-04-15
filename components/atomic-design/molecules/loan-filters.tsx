@@ -100,9 +100,12 @@ export const LoanFilters = ({
               <SelectValue placeholder="Select city" />
             </SelectTrigger>
             <SelectContent>
+              <SelectItem key="All Cities" value="All Cities">
+                All Cities
+              </SelectItem>
               {cities.map((city) => (
-                <SelectItem key={city} value={city}>
-                  {city}
+                <SelectItem key={city.name} value={city.name}>
+                  {city.name}
                 </SelectItem>
               ))}
             </SelectContent>
