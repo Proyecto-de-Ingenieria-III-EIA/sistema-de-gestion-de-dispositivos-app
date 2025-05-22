@@ -3,6 +3,11 @@ description:
 globs: context/**/*.tsx,context/**/*.ts,hooks/**/*.tsx,hooks/**/*.ts
 alwaysApply: false
 ---
+---
+description: 
+globs: context/**/*.tsx,context/**/*.ts,hooks/**/*.tsx,hooks/**/*.ts
+alwaysApply: false
+---
 # State Management
  
 ## Overview

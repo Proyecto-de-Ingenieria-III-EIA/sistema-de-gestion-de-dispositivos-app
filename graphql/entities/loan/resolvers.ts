@@ -26,9 +26,50 @@ interface ExtendLoanInput {
   newEndDate: Date;
 }
 
+export interface CreateTestUserInput {
+  name: string;
+  email: string;
+  role: 'ADMIN' | 'CLIENT' | 'TECHNICAL' | 'COORDINATOR' | 'EMPLOYEE';
+}
+
+export interface CreateTestDeviceInput {
+  serialNumber: string;
+  brand: string;
+  model: string;
+  category: 'LAPTOP' | 'PC' | 'MOBILE' | 'TABLET';
+  price: number;
+  extraInfo?: string;
+  components?: CreateTestComponentInput[];
+}
+
+export interface CreateTestComponentInput {
+  brand: string;
+  model: string;
+  type: 'RAM' | 'PROCESSOR' | 'GPU' | 'BOARD' | 'STORAGE';
+  description: string;
+}
+
+export interface CreateTestPeripheralInput {
+  serialNumber: string;
+  model: string;
+  type: 'MOUSE' | 'KEYBOARD' | 'MONITOR' | 'HEADSET' | 'WEBCAM' | 'OTHER';
+  brand: string;
+  price: number;
+  extraInfo?: string;
+}
+
+export interface CreateTestCityInput {
+  name: string;
+}
+
 const loanResolvers: Resolver = {
   Query: {
     getLoans: async (parent, args, { db, authData }) => {
+      if (!authData) {
+        throw new GraphQLError('Authentication required', {
+          extensions: { code: 'UNAUTHENTICATED' }
+        });
+      }
       if (authData.role !== 'ADMIN') {
         throw new GraphQLError('No autorizado para ver los préstamos.');
       }
@@ -157,12 +198,27 @@ const loanResolvers: Resolver = {
           },
         },
         include: {
-          devices: true,
+          devices: {
+            include: {
+              device: true
+            }
+          },
+          peripherals: {
+            include: {
+              peripheral: true
+            }
+          },
           originCity: true,
           arrivalCity: true,
         },
       });
-      return newLoan;
+
+      // Transform the response to match the GraphQL schema
+      return {
+        ...newLoan,
+        devices: newLoan.devices.map(loanDevice => loanDevice.device),
+        peripherals: newLoan.peripherals.map(loanPeripheral => loanPeripheral.peripheral)
+      };
     },
     updateLoanStatus: async (
       parent,
@@ -219,6 +275,74 @@ const loanResolvers: Resolver = {
       });
       return extendedLoan;
     },
+    createTestUser: async (parent, { input }: { input: CreateTestUserInput }, { db, authData }) => {
+      if (!authData || authData.role !== 'ADMIN') {
+        throw new GraphQLError('No autorizado para crear usuarios.');
+      }
+      return await db.user.create({
+        data: {
+          name: input.name,
+          email: input.email,
+          role: {
+            connect: {
+              name: input.role
+            }
+          }
+        }
+      });
+    },
+    createTestDevice: async (parent, { input }: { input: CreateTestDeviceInput }, { db, authData }) => {
+      if (!authData || authData.role !== 'ADMIN') {
+        throw new GraphQLError('No autorizado para crear dispositivos.');
+      }
+      return await db.device.create({
+        data: {
+          serialNumber: input.serialNumber,
+          brand: input.brand,
+          model: input.model,
+          category: input.category,
+          price: input.price,
+          extraInfo: input.extraInfo || '',
+          components: input.components ? {
+            create: input.components.map(component => ({
+              component: {
+                create: {
+                  brand: component.brand,
+                  model: component.model,
+                  type: component.type,
+                  description: component.description
+                }
+              }
+            }))
+          } : undefined
+        }
+      });
+    },
+    createTestPeripheral: async (parent, { input }: { input: CreateTestPeripheralInput }, { db, authData }) => {
+      if (!authData || authData.role !== 'ADMIN') {
+        throw new GraphQLError('No autorizado para crear periféricos.');
+      }
+      return await db.peripheral.create({
+        data: {
+          serialNumber: input.serialNumber,
+          model: input.model,
+          type: input.type,
+          brand: input.brand,
+          price: input.price,
+          extraInfo: input.extraInfo || ''
+        }
+      });
+    },
+    createTestCity: async (parent, { input }: { input: CreateTestCityInput }, { db, authData }) => {
+      if (!authData || authData.role !== 'ADMIN') {
+        throw new GraphQLError('No autorizado para crear ciudades.');
+      }
+      return await db.city.create({
+        data: {
+          name: input.name
+        }
+      });
+    }
   },
 };
 

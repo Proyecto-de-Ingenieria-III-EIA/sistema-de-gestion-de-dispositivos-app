@@ -4,6 +4,11 @@ globs:
 alwaysApply: true
 ---
 ---
+description: 
+globs: 
+alwaysApply: true
+---
+---
 description: General coding standards and best practices for maintainable code
 globs: *.*
 alwaysApply: true

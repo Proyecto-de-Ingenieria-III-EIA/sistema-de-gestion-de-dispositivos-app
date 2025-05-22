@@ -6,7 +6,8 @@
     "dev": "prisma generate && next dev",
     "build": "prisma generate && next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "populate-test-data": "bun run scripts/populate-test-data.ts"
   },
   "dependencies": {
     "@apollo/server": "^4.11.3",

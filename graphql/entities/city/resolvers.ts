@@ -18,7 +18,7 @@ const cityResolvers: Resolver = {
             return city;
         },
         getCityByName: async (parent, { name }: { name: string }, { db }) => {
-            const city = await db.city.findMany({ where: { name } });
+            const city = await db.city.findFirst({ where: { name } });
             if (!city) {
                 throw new GraphQLError('Ciudad no encontrada.');
             }
@@ -27,7 +27,7 @@ const cityResolvers: Resolver = {
     },
     Mutation: {
         createCity: async (parent, { input }: { input: CreateCityInput }, { db, authData }) => {
-            if (authData.role !== 'ADMIN') {
+            if (!authData || authData.role !== 'ADMIN') {
                throw new GraphQLError('No estás autorizado para hacer eso.');
             }
             

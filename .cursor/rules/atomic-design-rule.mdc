@@ -3,6 +3,11 @@ description:
 globs: components/**/*.tsx,components/**/*.ts
 alwaysApply: false
 ---
+---
+description: 
+globs: components/**/*.tsx,components/**/*.ts
+alwaysApply: false
+---
 # Atomic Design
  
 ## Overview

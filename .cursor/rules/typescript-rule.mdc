@@ -3,6 +3,11 @@ description:
 globs: *.tsx,*.ts
 alwaysApply: false
 ---
+---
+description: 
+globs: *.tsx,*.ts
+alwaysApply: false
+---
 # TypeScript Rules
  
 ## TypeScript Best Practices

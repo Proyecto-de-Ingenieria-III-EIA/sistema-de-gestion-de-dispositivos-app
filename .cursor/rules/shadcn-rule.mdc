@@ -3,6 +3,11 @@ description:
 globs: components/atomic-design/atoms/**/*.tsx,components/ui/**/*.tsx
 alwaysApply: false
 ---
+---
+description: 
+globs: components/atomic-design/**/*.tsx,components/ui/**/*.tsx
+alwaysApply: false
+---
 # shadcn/ui Rules
  
 ## Component Usage
