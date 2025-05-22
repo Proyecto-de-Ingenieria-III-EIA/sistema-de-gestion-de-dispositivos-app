@@ -17,20 +17,43 @@ for (const envVar of requiredEnvVars) {
   }
 }
 
+// Ensure the issuer URL is properly formatted
+const issuer = process.env.AUTH_AUTH0_ISSUER!.replace(/\/$/, ''); // Remove trailing slash if present
+
+
 export const authConfig = {
   providers: [
     Auth0({
       clientId: process.env.AUTH_AUTH0_ID!,
       clientSecret: process.env.AUTH_AUTH0_SECRET!,
-      issuer: process.env.AUTH_AUTH0_ISSUER!,
+      issuer,
+      authorization: {
+        params: {
+          scope: 'openid profile email',
+          response_type: 'code',
+        },
+      },
     }),
   ],
   adapter: PrismaAdapter(prisma),
   secret: process.env.AUTH_SECRET,
+  session: {
+    strategy: "jwt",
+  },
   callbacks: {
     async redirect({ url, baseUrl }) {
-      // Siempre redirige al dashboard después de iniciar sesión
+      // Always redirect to dashboard after login
       return `${baseUrl}/dashboard`;
-    }
-  }
+    },
+    async session({ session, token }) {
+      if (session.user) {
+        session.user.id = token.sub!;
+      }
+      return session;
+    },
+  },
+  pages: {
+    signIn: '/login',
+    error: '/login', // Error code passed in query string as ?error=
+  },
 } satisfies NextAuthOptions;

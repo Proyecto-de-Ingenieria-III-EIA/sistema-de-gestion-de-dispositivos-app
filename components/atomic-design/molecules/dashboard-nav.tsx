@@ -54,6 +54,17 @@ export function DashboardNav({ currentPath }: DashboardNavProps) {
               <BarChart3 className="h-4 w-4" />
               <span>Loans</span>
             </Link>
+            <Link
+              href="/map"
+              className={`flex items-center gap-3 rounded-lg px-3 py-2 ${currentPath === "/map"
+                ? "bg-primary/10 text-primary"
+                : "text-muted-foreground hover:bg-accent hover:text-accent-foreground"
+                }`}
+              onClick={() => setIsOpen(false)}
+            >
+              <BarChart3 className="h-4 w-4" />
+              <span>Map</span>
+            </Link>
           </nav>
         </div>
       </div>
