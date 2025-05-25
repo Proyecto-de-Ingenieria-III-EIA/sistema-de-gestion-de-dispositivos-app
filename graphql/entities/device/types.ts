@@ -20,6 +20,9 @@ const deviceTypes = gql`
     category: Enum_Category!
     createdAt: String!
     updatedAt: String!
+    loans: [Loan]
+    currentCity: City
+    destinationCity: City
   }
 
   # Input para la creación de un Device
