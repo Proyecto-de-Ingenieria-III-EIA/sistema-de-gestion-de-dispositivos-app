@@ -125,6 +125,28 @@ export function DashboardNav({ currentPath }: DashboardNavProps) {
                 <span>Devices</span>
               </Link>
             )}
+            <Link
+              href="/Devices"
+              className={`flex items-center gap-3 rounded-lg px-3 py-2 ${currentPath === "/Devices"
+                ? "bg-primary/10 text-primary"
+                : "text-muted-foreground hover:bg-accent hover:text-accent-foreground"
+                }`}
+              onClick={() => setIsOpen(false)}
+            >
+              <LayoutDashboard className="h-4 w-4" />
+              <span>Device Management</span>
+            </Link>
+            <Link
+              href="/components"
+              className={`flex items-center gap-3 rounded-lg px-3 py-2 ${currentPath === "/components"
+                ? "bg-primary/10 text-primary"
+                : "text-muted-foreground hover:bg-accent hover:text-accent-foreground"
+                }`}
+              onClick={() => setIsOpen(false)}
+            >
+              <LayoutDashboard className="h-4 w-4" />
+              <span>Component Registration</span>
+            </Link>
           </nav>
         </div>
       </div>
