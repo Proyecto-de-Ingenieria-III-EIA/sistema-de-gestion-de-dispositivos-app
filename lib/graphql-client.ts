@@ -20,7 +20,7 @@ export async function graphqlRequest<T = unknown>({
   headers = {}
 }: GraphQLRequestOptions): Promise<{ data?: T; errors?: Array<{ message: string; locations?: Array<{ line: number; column: number }>; path?: string[] }> }> {
   try {
-    const response = await fetch('/api/graphql', {
+    const response = await fetch('/api/graphql-proxy', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
