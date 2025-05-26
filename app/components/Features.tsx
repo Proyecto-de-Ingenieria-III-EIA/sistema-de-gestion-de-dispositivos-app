@@ -1,32 +1,19 @@
 "use client"
 
-import { Zap, Layers, Users, TrendingUp } from "lucide-react"
 import { motion } from "framer-motion"
+import { LucideIcon } from "lucide-react"
 
-const features = [
-  {
-    name: "Lightning Fast",
-    description: "Our platform is optimized for speed, ensuring quick load times and responsive interactions.",
-    icon: Zap,
-  },
-  {
-    name: "Intuitive Interface",
-    description: "A user-friendly interface that's easy to navigate, making your work more efficient.",
-    icon: Layers,
-  },
-  {
-    name: "Team Collaboration",
-    description: "Seamlessly work together with your team members in real-time.",
-    icon: Users,
-  },
-  {
-    name: "Advanced Analytics",
-    description: "Gain valuable insights with our powerful analytics and reporting tools.",
-    icon: TrendingUp,
-  },
-]
+interface Feature {
+  title: string;
+  description: string;
+  icon: string;
+}
 
-export default function Features() {
+interface FeaturesProps {
+  features: Feature[];
+}
+
+export default function Features({ features }: FeaturesProps) {
   return (
     <div className="py-24 bg-background relative overflow-hidden" id="features">
       {/* Add background elements */}
@@ -75,7 +62,7 @@ export default function Features() {
             transition={{ duration: 0.5, delay: 0.2 }}
             viewport={{ once: true }}
           >
-            Everything you need to streamline your workflow
+            Everything you need to manage your devices
           </motion.p>
           <motion.p
             className="mt-4 max-w-2xl text-xl text-muted-foreground lg:mx-auto"
@@ -84,8 +71,7 @@ export default function Features() {
             transition={{ duration: 0.5, delay: 0.4 }}
             viewport={{ once: true }}
           >
-            StreamLine offers a comprehensive set of features designed to boost your productivity and simplify your
-            business processes.
+            Our platform offers a comprehensive set of features designed to streamline your device management and loan processes.
           </motion.p>
         </div>
 
@@ -93,7 +79,7 @@ export default function Features() {
           <dl className="space-y-10 md:space-y-0 md:grid md:grid-cols-2 md:gap-x-8 md:gap-y-10">
             {features.map((feature, index) => (
               <motion.div
-                key={feature.name}
+                key={feature.title}
                 className="relative"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -106,9 +92,9 @@ export default function Features() {
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >
-                    <feature.icon className="h-6 w-6" aria-hidden="true" />
+                    <span className="text-2xl">{feature.icon}</span>
                   </motion.div>
-                  <p className="ml-16 text-lg leading-6 font-medium text-foreground">{feature.name}</p>
+                  <p className="ml-16 text-lg leading-6 font-medium text-foreground">{feature.title}</p>
                 </dt>
                 <dd className="mt-2 ml-16 text-base text-muted-foreground">{feature.description}</dd>
               </motion.div>

@@ -1,8 +1,12 @@
 "use client"
 
 import Link from "next/link"
-import { BarChart3, LayoutDashboard } from "lucide-react"
+import { BarChart3, LayoutDashboard, Users, Ticket, Smartphone } from "lucide-react"
 import { useMobileNavContext } from "@/hooks/use-mobile-nav"
+import { useSession } from "next-auth/react"
+import { cn } from "@/lib/utils"
+import { buttonVariants } from "@/components/atomic-design/atoms/button"
+import { Enum_RoleName } from "@prisma/client"
 
 interface DashboardNavProps {
   currentPath: string;
@@ -10,6 +14,23 @@ interface DashboardNavProps {
 
 export function DashboardNav({ currentPath }: DashboardNavProps) {
   const { isOpen, setIsOpen } = useMobileNavContext();
+  const { data: session } = useSession();
+  
+  console.log('Session data:', session);
+  console.log('User role:', session?.user?.role);
+
+  const userRole = session?.user?.role as Enum_RoleName
+  const canAccessUsers = userRole === Enum_RoleName.ADMIN
+  const canAccessTickets = userRole && [
+    Enum_RoleName.ADMIN,
+    Enum_RoleName.TECHNICAL,
+    Enum_RoleName.COORDINATOR
+  ].includes(userRole)
+  const canAccessDevices = userRole === Enum_RoleName.ADMIN
+
+  console.log('Can access users:', canAccessUsers);
+  console.log('Can access tickets:', canAccessTickets);
+  console.log('Can access devices:', canAccessDevices);
 
   return (
     <>
@@ -31,7 +52,7 @@ export function DashboardNav({ currentPath }: DashboardNavProps) {
           <div className="flex h-12 items-center border-b px-4 font-semibold">
             <span>Navigation</span>
           </div>
-          <nav className="grid gap-1 px-2 text-sm font-medium">
+          <nav className="flex flex-col gap-2">
             <Link
               href="/dashboard"
               className={`flex items-center gap-3 rounded-lg px-3 py-2 ${currentPath === "/dashboard"
@@ -65,6 +86,45 @@ export function DashboardNav({ currentPath }: DashboardNavProps) {
               <BarChart3 className="h-4 w-4" />
               <span>Map</span>
             </Link>
+            {canAccessUsers && (
+              <Link
+                href="/users"
+                className={`flex items-center gap-3 rounded-lg px-3 py-2 ${currentPath === "/users"
+                  ? "bg-primary/10 text-primary"
+                  : "text-muted-foreground hover:bg-accent hover:text-accent-foreground"
+                  }`}
+                onClick={() => setIsOpen(false)}
+              >
+                <Users className="h-4 w-4" />
+                <span>Users</span>
+              </Link>
+            )}
+            {canAccessTickets && (
+              <Link
+                href="/tickets"
+                className={`flex items-center gap-3 rounded-lg px-3 py-2 ${currentPath === "/tickets"
+                  ? "bg-primary/10 text-primary"
+                  : "text-muted-foreground hover:bg-accent hover:text-accent-foreground"
+                  }`}
+                onClick={() => setIsOpen(false)}
+              >
+                <Ticket className="h-4 w-4" />
+                <span>Tickets</span>
+              </Link>
+            )}
+            {canAccessDevices && (
+              <Link
+                href="/devices"
+                className={`flex items-center gap-3 rounded-lg px-3 py-2 ${currentPath === "/devices"
+                  ? "bg-primary/10 text-primary"
+                  : "text-muted-foreground hover:bg-accent hover:text-accent-foreground"
+                  }`}
+                onClick={() => setIsOpen(false)}
+              >
+                <Smartphone className="h-4 w-4" />
+                <span>Devices</span>
+              </Link>
+            )}
           </nav>
         </div>
       </div>
