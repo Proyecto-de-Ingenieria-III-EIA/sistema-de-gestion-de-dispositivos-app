@@ -17,8 +17,8 @@ const userResolvers: Resolver = {
     },
     role: async (parent: User, args, { db }) => {
       const role = (await db.$queryRaw`
-      select r.* from ejemplo_proyecto."Role" r
-        join ejemplo_proyecto."User" u
+      select r.* from "Role" r
+        join "User" u
             on u."roleId" = r.id
       where u.id = ${parent.id}
         `) as Role[];
@@ -51,22 +51,31 @@ const userResolvers: Resolver = {
   },
 
   Mutation: {
-    updateUserRole: async (parent, args, { db }) => {
+    updateUserRole: async (parent, args, { db, authData }) => {
+      if (authData.role !== Enum_RoleName.ADMIN) {
+        throw new GraphQLError('Not authorized. Admin role required.');
+      }
+
       const role = await db.role.findFirst({
         where: {
-          name: args.name,
+          name: args.roleName,
         },
       });
+
       if (!role) {
         throw new GraphQLError('Role not found.');
       }
+
       return db.user.update({
         where: {
           id: args.id,
         },
         data: {
-          roleId: role?.id ?? '',
+          roleId: role.id,
         },
+        include: {
+          role: true
+        }
       });  
     },
     updateUserRoleByEmail: async (parent, args, { db, authData }) => {
