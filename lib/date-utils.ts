@@ -34,4 +34,4 @@ export const formatDate = (
     console.error("Error formatting date:", error)
     return fallback
   }
-} 
+}
