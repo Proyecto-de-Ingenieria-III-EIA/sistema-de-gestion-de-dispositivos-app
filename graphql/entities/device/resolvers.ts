@@ -29,7 +29,46 @@ interface GetDevicesByCityInput {
 const deviceResolvers: Resolver = {
   Query: {
     getDevices: async (parent, args, { db }) => {
-      return await db.device.findMany();
+      const devices = await db.device.findMany({
+        include: {
+          components: true
+        },
+      });
+
+      // Get all loan devices for these devices
+      const loanDevices = await db.loanDevice.findMany({
+        where: {
+          deviceId: {
+            in: devices.map(d => d.id)
+          }
+        },
+        include: {
+          loan: {
+            include: {
+              originCity: true,
+              arrivalCity: true
+            }
+          }
+        }
+      });
+
+      // Map loans and cities to devices
+      return devices.map(device => {
+        const deviceLoans = loanDevices
+          .filter(ld => ld.deviceId === device.id)
+          .map(ld => ld.loan);
+
+        // Get the most recent loan for current city
+        const mostRecentLoan = deviceLoans
+          .sort((a, b) => new Date(b.startDate).getTime() - new Date(a.startDate).getTime())[0];
+
+        return {
+          ...device,
+          loans: deviceLoans,
+          currentCity: mostRecentLoan?.arrivalCity || null,
+          destinationCity: mostRecentLoan?.originCity || null
+        };
+      });
     },
     getDeviceById: async (parent, { id }: { id: string }, { db }) => {
       const device = await db.device.findUnique({ where: { id } });

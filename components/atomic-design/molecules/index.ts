@@ -24,3 +24,5 @@ export * from './status-check';
 export * from './tabs';
 export * from './toast';
 export * from './tooltip'; 
+export * from './table';
+export * from './select'; 

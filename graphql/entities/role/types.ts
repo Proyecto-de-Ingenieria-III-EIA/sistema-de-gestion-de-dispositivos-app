@@ -3,7 +3,10 @@ import gql from 'graphql-tag';
 const roleTypes = gql`
   enum Enum_RoleName {
     ADMIN
-    USER
+    CLIENT
+    TECHNICAL
+    COORDINATOR
+    EMPLOYEE
   }
 
   type Role {

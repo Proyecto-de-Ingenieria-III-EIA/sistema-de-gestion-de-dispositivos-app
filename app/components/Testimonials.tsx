@@ -3,31 +3,17 @@
 import { motion } from "framer-motion"
 import Image from "next/image"
 
-const testimonials = [
-  {
-    name: "Sarah Thompson",
-    role: "CEO at TechCorp",
-    image: "/placeholder.svg?height=400&width=400",
-    quote:
-      "StreamLine has revolutionized our workflow. It's intuitive, powerful, and has significantly boosted our team's productivity.",
-  },
-  {
-    name: "John Davis",
-    role: "Marketing Director at GrowthHub",
-    image: "/placeholder.svg?height=400&width=400",
-    quote:
-      "The analytics features in StreamLine have provided us with invaluable insights. It's been a game-changer for our marketing strategies.",
-  },
-  {
-    name: "Emily Chen",
-    role: "Product Manager at InnovateCo",
-    image: "/placeholder.svg?height=400&width=400",
-    quote:
-      "The collaboration tools in StreamLine have made remote work seamless for our team. It's an essential part of our daily operations now.",
-  },
-]
+interface Testimonial {
+  quote: string;
+  author: string;
+  role: string;
+}
 
-export default function Testimonials() {
+interface TestimonialsProps {
+  testimonials: Testimonial[];
+}
+
+export default function Testimonials({ testimonials }: TestimonialsProps) {
   return (
     <div className="bg-secondary py-16 sm:py-24 relative overflow-hidden" id="testimonials">
       {/* Add background elements */}
@@ -66,15 +52,15 @@ export default function Testimonials() {
           transition={{ duration: 0.5 }}
           viewport={{ once: true }}
         >
-          <h2 className="text-3xl font-extrabold text-foreground sm:text-4xl">Trusted by businesses worldwide</h2>
+          <h2 className="text-3xl font-extrabold text-foreground sm:text-4xl">Trusted by organizations worldwide</h2>
           <p className="mt-4 text-xl text-muted-foreground">
-            Here&apos;s what our satisfied customers have to say about StreamLine
+            Here&apos;s what our satisfied customers have to say about our device management system
           </p>
         </motion.div>
         <div className="mt-16 grid gap-8 lg:grid-cols-3">
           {testimonials.map((testimonial, index) => (
             <motion.div
-              key={testimonial.name}
+              key={testimonial.author}
               className="bg-background border border-border shadow-lg rounded-lg overflow-hidden"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -84,19 +70,12 @@ export default function Testimonials() {
             >
               <div className="px-6 py-8">
                 <div className="flex items-center">
-                  <Image
-                    className="h-12 w-12 rounded-full"
-                    width={48}
-                    height={48}
-                    src={testimonial.image || "/placeholder.svg"}
-                    alt={testimonial.name}
-                  />
                   <div className="ml-4">
-                    <div className="text-lg font-medium text-foreground">{testimonial.name}</div>
+                    <div className="text-lg font-medium text-foreground">{testimonial.author}</div>
                     <div className="text-sm text-muted-foreground">{testimonial.role}</div>
                   </div>
                 </div>
-                <p className="mb-4 text-muted-foreground italic">&quot;{testimonial.quote}&quot;</p>
+                <p className="mt-4 text-muted-foreground italic">&quot;{testimonial.quote}&quot;</p>
               </div>
             </motion.div>
           ))}

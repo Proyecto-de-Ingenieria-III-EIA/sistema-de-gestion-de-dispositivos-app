@@ -48,6 +48,16 @@ export const authConfig = {
     async session({ session, token }) {
       if (session.user) {
         session.user.id = token.sub!;
+        
+        // Get the user's role from the database
+        const user = await prisma.user.findUnique({
+          where: { id: token.sub },
+          include: { role: true }
+        });
+        
+        if (user?.role) {
+          session.user.role = user.role.name;
+        }
       }
       return session;
     },

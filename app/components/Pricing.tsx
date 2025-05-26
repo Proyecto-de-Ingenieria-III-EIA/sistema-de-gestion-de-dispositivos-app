@@ -4,36 +4,17 @@ import { Check } from "lucide-react"
 import { Button } from "@/components/atomic-design/atoms"
 import { motion } from "framer-motion"
 
-const plans = [
-  {
-    name: "Starter",
-    price: "$29",
-    features: ["5 team members", "Basic analytics", "24/7 support", "10GB storage"],
-  },
-  {
-    name: "Professional",
-    price: "$99",
-    features: [
-      "Unlimited team members",
-      "Advanced analytics",
-      "Priority support",
-      "100GB storage",
-      "Custom integrations",
-    ],
-  },
-  {
-    name: "Enterprise",
-    price: "Custom",
-    features: [
-      "Unlimited everything",
-      "Dedicated account manager",
-      "Custom feature development",
-      "On-premise deployment option",
-    ],
-  },
-]
+interface Plan {
+  name: string;
+  price: string;
+  features: string[];
+}
 
-export default function Pricing() {
+interface PricingProps {
+  plans: Plan[];
+}
+
+export default function Pricing({ plans }: PricingProps) {
   return (
     <div className="bg-background py-16 sm:py-24 relative overflow-hidden" id="pricing">
       {/* Add background elements */}
@@ -73,7 +54,7 @@ export default function Pricing() {
           viewport={{ once: true }}
         >
           <h2 className="text-3xl font-extrabold text-foreground sm:text-4xl">Simple, transparent pricing</h2>
-          <p className="mt-4 text-xl text-muted-foreground">Choose the plan that&apos;s right for your business</p>
+          <p className="mt-4 text-xl text-muted-foreground">Choose the plan that&apos;s right for your organization</p>
         </motion.div>
         <div className="mt-16 grid gap-8 lg:grid-cols-3">
           {plans.map((plan, index) => (

@@ -2,8 +2,16 @@
 
 import { Button } from "@/components/atomic-design/atoms"
 import { motion } from "framer-motion"
+import Link from "next/link"
 
-export default function Hero() {
+interface HeroProps {
+  title: string;
+  subtitle: string;
+  ctaText: string;
+  ctaLink: string;
+}
+
+export default function Hero({ title, subtitle, ctaText, ctaLink }: HeroProps) {
   return (
     <div className="bg-background py-20 md:py-32 overflow-hidden relative">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -20,15 +28,7 @@ export default function Hero() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2, duration: 0.8 }}
             >
-              Simplify Your Workflow
-            </motion.span>
-            <motion.span
-              className="text-foreground"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4, duration: 0.8 }}
-            >
-              with StreamLine
+              {title}
             </motion.span>
           </h1>
           <motion.p
@@ -37,8 +37,7 @@ export default function Hero() {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.6, duration: 0.8 }}
           >
-            Boost productivity and streamline your business processes with our powerful SaaS platform. Designed for
-            teams of all sizes.
+            {subtitle}
           </motion.p>
           <motion.div
             className="mt-10 flex flex-col sm:flex-row gap-4 justify-center"
@@ -46,12 +45,11 @@ export default function Hero() {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.8, duration: 0.8 }}
           >
+            <Link href={ctaLink}>
             <Button size="lg" className="w-full sm:w-auto">
-              Get started
+                {ctaText}
             </Button>
-            <Button variant="outline" size="lg" className="w-full sm:w-auto">
-              Learn more
-            </Button>
+            </Link>
           </motion.div>
         </motion.div>
       </div>

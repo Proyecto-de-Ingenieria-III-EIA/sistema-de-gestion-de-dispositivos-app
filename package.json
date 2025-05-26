@@ -10,6 +10,7 @@
     "populate-test-data": "bun run scripts/populate-test-data.ts"
   },
   "dependencies": {
+    "@apollo/client": "^3.13.8",
     "@apollo/server": "^4.11.3",
     "@as-integrations/next": "^3.2.0",
     "@auth/prisma-adapter": "^2.8.0",

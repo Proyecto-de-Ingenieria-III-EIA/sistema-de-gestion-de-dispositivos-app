@@ -1,6 +1,6 @@
 import gql from 'graphql-tag';
 
-const ticketTypes = gql`
+export const ticketTypes = gql`
   enum Enum_TicketState {
     OPEN
     IN_PROGRESS
@@ -9,22 +9,22 @@ const ticketTypes = gql`
 
   type Ticket {
     id: ID!
-    state: Enum_TicketState!
     subject: String!
-    description: String!  # Mapea al campo "desription" del modelo Prisma
-    loanId: ID!
-    deviceId: ID!
-    technicianId: ID!
-    createdAt: String!
-    updatedAt: String!
+    description: String!
+    state: Enum_TicketState!
+    createdAt: DateTime!
+    updatedAt: DateTime!
+    loan: Loan!
+    device: Device!
+    technician: User
   }
 
   input CreateTicketInput {
+    technicianId: ID
     subject: String!
-    description: String!  # Nota: aunque en Prisma se llame "desription", aquí usamos "description" para claridad
+    description: String!
     loanId: ID!
     deviceId: ID!
-    technicianId: ID!
   }
 
   input getUserAssignedTicketsInput {
@@ -37,7 +37,7 @@ const ticketTypes = gql`
 
   type Query {
     getTickets: [Ticket!]!
-    getTicketById(id: ID!): Ticket
+    getTicketById(id: ID!): Ticket!
     getTicketsByLoanId(loanId: ID!): [Ticket!]!
     getActiveTickets: [Ticket!]!
     getAssignedTicketsByUserId(userId: ID!): [Ticket!]!
@@ -48,7 +48,6 @@ const ticketTypes = gql`
     createTicket(input: CreateTicketInput!): Ticket!
     closeTicket(input: CloseTicketInput!): Ticket!
     assignTicketToTechnician(ticketId: ID!, technicianId: ID!): Ticket!
+    updateTicketState(ticketId: ID!, state: Enum_TicketState!): Ticket!
   }
 `;
-
-export { ticketTypes };
