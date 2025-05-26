@@ -137,15 +137,26 @@ export function DashboardNav({ currentPath }: DashboardNavProps) {
               <span>Device Management</span>
             </Link>
             <Link
-              href="/components"
-              className={`flex items-center gap-3 rounded-lg px-3 py-2 ${currentPath === "/components"
+              href="/peripherals"
+              className={`flex items-center gap-3 rounded-lg px-3 py-2 ${currentPath === "/Devices"
                 ? "bg-primary/10 text-primary"
                 : "text-muted-foreground hover:bg-accent hover:text-accent-foreground"
                 }`}
               onClick={() => setIsOpen(false)}
             >
               <LayoutDashboard className="h-4 w-4" />
-              <span>Component Registration</span>
+              <span>Device Management</span>
+            </Link>
+            <Link
+              href="/peripherals"
+              className={`flex items-center gap-3 rounded-lg px-3 py-2 ${currentPath === "/peripherals"
+                ? "bg-primary/10 text-primary"
+                : "text-muted-foreground hover:bg-accent hover:text-accent-foreground"
+                }`}
+              onClick={() => setIsOpen(false)}
+            >
+              <LayoutDashboard className="h-4 w-4" />
+              <span>peripherals</span>
             </Link>
           </nav>
         </div>
